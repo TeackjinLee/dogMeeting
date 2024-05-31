@@ -1,21 +1,38 @@
 package com.springboot.dogmeeting.api.blog;
 
-import com.springboot.dogmeeting.api.blog.dto.AddArticleRequest;
-import com.springboot.dogmeeting.api.blog.dto.AritcleResponse;
-import com.springboot.dogmeeting.api.blog.dto.UpdateArticleRequest;
+import com.springboot.dogmeeting.api.blog.dto.*;
 import com.springboot.dogmeeting.datasource.article.Article;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @AllArgsConstructor
-@RestController
+@Controller
 public class BlogController {
     private final BlogService blogService;
+
+    @GetMapping("/articles")
+    public String getArticles(Model model){
+        List<ArticleListViewResponse> articles = blogService.findAll().stream()
+                .map(ArticleListViewResponse::new)
+                .toList();
+        model.addAttribute("articles", articles); // 블로그 글 리스트 저장
+        return "articleList"; // articleList.html 뷰 조회
+    }
+
+    @GetMapping("/articles/{id}")
+    public String getArticle(@PathVariable(name = "id") Long id, Model model){
+        Article article = blogService.findById(id);
+        model.addAttribute("article", new ArticleViewResponse(article));
+
+        return "article";
+    }
 
     @GetMapping("/api/articles")
     public ResponseEntity<List<AritcleResponse>> getAllArticles() {
