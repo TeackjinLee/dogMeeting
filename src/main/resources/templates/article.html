@@ -24,12 +24,37 @@
                 <section class="mb-5">
                     <p class="fs-5 mb-4" th:text="${article.content}"></p>
                 </section>
-                <button type="button" class="btn btn-primary btn-sm">수정</button>
-                <button type="button" class="btn btn-secondary btn-sm">삭제</button>
+                <input type="hidden" id="article-id" th:value="${article.id}">
+                <button type="button" class="btn btn-primary btn-sm" id="modify-btn" th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|">수정</button>
+                <button id="delete-btn" type="button" class="btn btn-secondary btn-sm">삭제</button>
             </article>
         </div>
     </div>
 </div>
+<script>
+    const deleteBtn = document.getElementById("delete-btn");
+    console.log("sss");
+    if (deleteBtn) {
+        deleteBtn.addEventListener("click", e => {
+           let id = document.getElementById("article-id").value;
+           fetch(`/api/articles/${id}`, {
+               method: 'DELETE'
+           }).then(() => {
+               alert("삭제가 완료되었습니다.");
+               location.replace('/articles');
+           });
+        });
+    }
 
+    // 생성 기능
+    const createButton = document.getElementById('create-btn');
+
+    if(createButton) {
+        createButton.addEventListener("click" e => {
+            fetch()
+        });
+    }
+
+</script>
 </body>
 </html>
