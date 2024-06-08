@@ -65,8 +65,10 @@ public class BlogController {
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request) {
+        System.out.println("fdsfsd");
         Article savedArticle = blogService.save(request);
-
+        System.out.println("fdsfs");
+        System.out.println(savedArticle);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }
 
