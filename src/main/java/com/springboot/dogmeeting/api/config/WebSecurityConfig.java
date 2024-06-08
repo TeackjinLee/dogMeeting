@@ -53,7 +53,8 @@ public class WebSecurityConfig {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userService) // 사용자 정보 서비스 설정
                 .passwordEncoder(bCryptPasswordEncoder)
-                .and().build();
+                .and()
+                .build();
     }
 
     // 패스워드 인코더로 사용할 빈 등록
