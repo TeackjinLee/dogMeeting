@@ -64,6 +64,8 @@ class TokenProviderTest {
                 .expiration(new Date(new Date().getTime() - Duration.ofDays(7).toMillis()))
                 .build()
                 .createToken(jwtProperties);
+        System.out.println("gfsfsds");
+        System.out.println(token);
 
         // when : 토큰 제공자의 validToken() 메소드를 호출해 유효한 토큰인지 검증한 뒤 결과값을 반환받는다.
         boolean result = tokenProvider.validToken(token);
