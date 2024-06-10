@@ -1,4 +1,4 @@
-package com.springboot.dogmeeting.api.config.jwt;
+package com.springboot.dogmeeting.api.common.config.jwt;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.SignatureAlgorithm;

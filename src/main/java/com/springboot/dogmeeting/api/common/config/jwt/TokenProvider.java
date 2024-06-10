@@ -1,4 +1,4 @@
-package com.springboot.dogmeeting.api.config.jwt;
+package com.springboot.dogmeeting.api.common.config.jwt;
 
 import com.springboot.dogmeeting.datasource.user.User;
 import io.jsonwebtoken.Claims;

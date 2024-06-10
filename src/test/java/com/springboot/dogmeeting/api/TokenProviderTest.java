@@ -1,8 +1,8 @@
 package com.springboot.dogmeeting.api;
 
-import com.springboot.dogmeeting.api.config.jwt.JwtFactory;
-import com.springboot.dogmeeting.api.config.jwt.JwtProperties;
-import com.springboot.dogmeeting.api.config.jwt.TokenProvider;
+import com.springboot.dogmeeting.api.common.config.jwt.JwtFactory;
+import com.springboot.dogmeeting.api.common.config.jwt.JwtProperties;
+import com.springboot.dogmeeting.api.common.config.jwt.TokenProvider;
 import com.springboot.dogmeeting.datasource.user.User;
 import com.springboot.dogmeeting.datasource.user.UserRepository;
 import io.jsonwebtoken.Jwts;

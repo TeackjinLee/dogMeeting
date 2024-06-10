@@ -1,4 +1,4 @@
-package com.springboot.dogmeeting.api.config;
+package com.springboot.dogmeeting.api.common.config;
 
 import com.springboot.dogmeeting.api.user.UserDetailService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize // 인증, 인가 설정
                         .requestMatchers("/login", "/signup", "/user").permitAll()
                         .anyRequest().authenticated()
@@ -42,7 +44,6 @@ public class WebSecurityConfig {
                 ).logout(logout -> logout   // 로그아웃 설정
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
-                ).csrf(AbstractHttpConfigurer::disable  // 실습을 위해 잠시 비활성화
                 ).build();
     }
 
