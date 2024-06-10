@@ -1,5 +1,8 @@
 package com.springboot.dogmeeting.api.common.config;
 
+import com.springboot.dogmeeting.api.common.config.jwt.JwtFactory;
+import com.springboot.dogmeeting.api.common.config.jwt.JwtProperties;
+import com.springboot.dogmeeting.api.common.config.jwt.TokenProvider;
 import com.springboot.dogmeeting.api.user.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.time.Duration;
+
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @RequiredArgsConstructor
@@ -20,6 +25,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 public class WebSecurityConfig {
 
     private final UserDetailsService userService;
+    private final TokenProvider tokenProvider;
 
     // 스프링 시큐리티 기능 비활성화
     @Bean
@@ -44,7 +50,8 @@ public class WebSecurityConfig {
                 ).logout(logout -> logout   // 로그아웃 설정
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
-                ).build();
+                )
+                .build();
     }
 
     // 인증 관리자 관련 설정
