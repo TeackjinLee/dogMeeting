@@ -7,6 +7,11 @@
 </head>
 <body>
 
+<header class="mb-4">
+    <h1 class="fw-bolder mb-1" th:text="${article.title}"></h1>
+    <div class="text-muted fst-italic mb-2" th:text="|Posted on ${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')} By ${article.author}|"></div>
+</header>
+
 <div class="p-5 mb-5 text-center</> bg-light>">
     <h1 class="mb-3">My Blog</h1>
     <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>
@@ -31,21 +36,6 @@
         </div>
     </div>
 </div>
-<script>
-    const deleteBtn = document.getElementById("delete-btn");
-    console.log("sss");
-    if (deleteBtn) {
-        deleteBtn.addEventListener("click", e => {
-           let id = document.getElementById("article-id").value;
-           fetch(`/api/articles/${id}`, {
-               method: 'DELETE'
-           }).then(() => {
-               alert("삭제가 완료되었습니다.");
-               location.replace('/articles');
-           });
-        });
-    }
-
-</script>
+<script src="/static/js/article.js"></script>
 </body>
 </html>

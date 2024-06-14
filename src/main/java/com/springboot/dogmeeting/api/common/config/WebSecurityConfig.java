@@ -24,50 +24,50 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @Configuration
 public class WebSecurityConfig {
 
-    private final UserDetailsService userService;
-    private final TokenProvider tokenProvider;
-
-    // 스프링 시큐리티 기능 비활성화
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-                .requestMatchers(toH2Console())
-                .requestMatchers("/static/**");
-    }
-
-    // 특정 HTTP 요청에 대한 웹 기반 보안 구성
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize // 인증, 인가 설정
-                        .requestMatchers("/login", "/signup", "/user").permitAll()
-                        .anyRequest().authenticated()
-                ).formLogin(login -> login  // 폼 기반 로그인 설정
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/articles")
-                ).logout(logout -> logout   // 로그아웃 설정
-                        .logoutSuccessUrl("/login")
-                        .invalidateHttpSession(true)
-                )
-                .build();
-    }
-
-    // 인증 관리자 관련 설정
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService)
-            throws Exception{
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userService) // 사용자 정보 서비스 설정
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .build();
-    }
-
-    // 패스워드 인코더로 사용할 빈 등록
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    private final UserDetailsService userService;
+//    private final TokenProvider tokenProvider;
+//
+//    // 스프링 시큐리티 기능 비활성화
+//    @Bean
+//    public WebSecurityCustomizer configure() {
+//        return (web) -> web.ignoring()
+//                .requestMatchers(toH2Console())
+//                .requestMatchers("/static/**");
+//    }
+//
+//    // 특정 HTTP 요청에 대한 웹 기반 보안 구성
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .httpBasic(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(authorize -> authorize // 인증, 인가 설정
+//                        .requestMatchers("/login", "/signup", "/user").permitAll()
+//                        .anyRequest().authenticated()
+//                ).formLogin(login -> login  // 폼 기반 로그인 설정
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/articles")
+//                ).logout(logout -> logout   // 로그아웃 설정
+//                        .logoutSuccessUrl("/login")
+//                        .invalidateHttpSession(true)
+//                )
+//                .build();
+//    }
+//
+//    // 인증 관리자 관련 설정
+//    @Bean
+//    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService)
+//            throws Exception{
+//        return http.getSharedObject(AuthenticationManagerBuilder.class)
+//                .userDetailsService(userService) // 사용자 정보 서비스 설정
+//                .passwordEncoder(bCryptPasswordEncoder)
+//                .and()
+//                .build();
+//    }
+//
+//    // 패스워드 인코더로 사용할 빈 등록
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 }
