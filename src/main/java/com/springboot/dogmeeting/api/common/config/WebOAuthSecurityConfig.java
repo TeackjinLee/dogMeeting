@@ -14,12 +14,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -33,7 +30,7 @@ public class WebOAuthSecurityConfig {
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-//    private final UserService userService;
+    private final UserService userService;
 
 
     // 스프링 시큐리티 기능 비활성화
@@ -65,15 +62,15 @@ public class WebOAuthSecurityConfig {
                             .anyRequest().permitAll()
                 );
 
-//        http.oauth2Login()
-//                .loginPage("/login")
-//                .authorizationEndpoint()
-//                // Authorization 요청과 관련된 상태 저장
-//                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-//                .and()
-//                .successHandler(oAuth2SuccessHandler()) // 인증 성공 시 실행할 핸들러
-//                .userInfoEndpoint()
-//                .userService(oAuth2UserCustomService);
+        http.oauth2Login()
+                .loginPage("/login")
+                .authorizationEndpoint()
+                // Authorization 요청과 관련된 상태 저장
+                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+                .and()
+                .successHandler(oAuth2SuccessHandler()) // 인증 성공 시 실행할 핸들러
+                .userInfoEndpoint()
+                .userService(oAuth2UserCustomService);
 
         http.logout(request -> request.logoutSuccessUrl("/login"));
 
@@ -115,11 +112,11 @@ public class WebOAuthSecurityConfig {
 //    }
 
     @Bean
-    public OAuth2SuccessHandler oAuth2SuccessHandler(UserService userService) {
+    public OAuth2SuccessHandler oAuth2SuccessHandler() {
         return new OAuth2SuccessHandler(tokenProvider,
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
-                null
+                userService
         );
     }
 
@@ -134,7 +131,7 @@ public class WebOAuthSecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
