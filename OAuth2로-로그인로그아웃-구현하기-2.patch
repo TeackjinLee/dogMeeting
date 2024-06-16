@@ -1,0 +1,19 @@
+Subject: [PATCH] OAuth2로-로그인로그아웃-구현하기-2
+---
+Index: src/main/java/com/springboot/dogmeeting/api/user/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/springboot/dogmeeting/api/user/UserService.java b/src/main/java/com/springboot/dogmeeting/api/user/UserService.java
+--- a/src/main/java/com/springboot/dogmeeting/api/user/UserService.java	(revision 93af6e85c457218c022ecc4c3f10865ce1932c11)
++++ b/src/main/java/com/springboot/dogmeeting/api/user/UserService.java	(revision f772a85037ad48ff8a819455530957cfe8c6932c)
+@@ -16,7 +16,7 @@
+ @RequiredArgsConstructor
+ @Service
+ public class UserService {
+-
++    //
+     private final UserRepository userRepository;
+     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+ 
